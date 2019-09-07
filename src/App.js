@@ -45,7 +45,7 @@ export default function App() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <BrowserRouter>
+                <BrowserRouter basename="/stackoverflow-search">
                   <Switch>
                     <Route
                       path="/"
