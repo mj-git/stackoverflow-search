@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { makeStyles, Container, Grid, Paper } from '@material-ui/core';
 import Home from './pages/Home';
 import SearchBar from './components/SearchBar';
@@ -31,13 +31,18 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-export default function App() {
+function App({ history }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const classes = useStyle();
   return (
     <div className={classes.root}>
-      <SearchBar onSearchInputChange={term => setSearchTerm(term)}></SearchBar>
+      <SearchBar
+        onSearchInputChange={term => {
+          history.push('/');
+          setSearchTerm(term);
+        }}
+      ></SearchBar>
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -45,19 +50,17 @@ export default function App() {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <BrowserRouter basename="/stackoverflow-search">
-                  <Switch>
-                    <Route
-                      path="/"
-                      exact
-                      render={props => <Home {...props} query={searchTerm} />}
-                    ></Route>
-                    <Route path="/:id/:title" component={Answers} />
-                    <Route
-                      render={() => <h1>404..Page doesn't exist</h1>}
-                    ></Route>
-                  </Switch>
-                </BrowserRouter>
+                <Switch>
+                  <Route
+                    path="/"
+                    exact
+                    render={props => <Home {...props} query={searchTerm} />}
+                  ></Route>
+                  <Route path="/:id/:title" component={Answers} />
+                  <Route
+                    render={() => <h1>404..Page doesn't exist</h1>}
+                  ></Route>
+                </Switch>
               </Paper>
             </Grid>
           </Grid>
@@ -66,3 +69,5 @@ export default function App() {
     </div>
   );
 }
+
+export default withRouter(App);

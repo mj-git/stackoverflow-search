@@ -54,7 +54,7 @@ export default function SearchBar({ onSearchInputChange }) {
       <AppBar position="absolute">
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Zededa-Stackoverflow-Search
+            Stackoverflow-Search
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
